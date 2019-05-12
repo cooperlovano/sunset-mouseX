@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>MouseX background img</title>
+    <style>
+      .zone {
+        width: 100%;
+        height: 600px;
+        border: 1px solid black;
+      }
+      .one {
+        background-image: url(./forest.png);
+      }
+      .two {
+        background-image: url(./forest2.png);
+      }
+    </style>
+  </head>
+  <body onresize="divideScreen()" onload="divideScreen()">
+    <div
+      onmousemove="showCoords(event)"
+      onmouseout="clearCoor()"
+      class="zone"
+    ></div>
+
+    <span id="position"> </span>
+
+    <p id="demo"></p>
+    <div class="one" id="changer"></div>
+
+    <script>
+      function divideScreen() {
+        var numbFrames = 100;
+        var arrayT = []; //for when we have images
+        var theWidth = document.body.clientWidth;
+        var section = Math.floor(theWidth / numbFrames);
+        document.getElementById("position").innerHTML = section;
+        var i;
+        for (i = 0; i < theWidth; i++) {
+          if (i % section == 0) {
+            arrayT += i + ", ";
+          }
+        }
+        console.log(arrayT);
+      }
+
+      function showCoords(event) {
+        var numbFrames = 100;
+        var theWidth = document.body.clientWidth;
+        var section = Math.floor(theWidth / numbFrames);
+        var x = event.clientX;
+        var y = event.clientY;
+
+        var coor = "X coords: " + x + ", Y coords: " + y;
+        document.getElementById("demo").innerHTML = coor;
+        if (x < arrayT[20]) {
+          console.log("OK");
+        }
+        if (x < 100) {
+          console.log("LESS");
+          document.getElementById("changer").classList.remove("one");
+          document.getElementById("changer").classList.add("two");
+        } else {
+          document.getElementById("changer").classList.remove("two");
+          document.getElementById("changer").classList.add("one");
+        }
+      }
+
+      function clearCoor() {
+        document.getElementById("changer").innerHTML = "";
+      }
+
+      /* body {
+          background: url(./forest.png) no-repeat center center fixed;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+        }
+        */
+    </script>
+  </body>
+</html>
